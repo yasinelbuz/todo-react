@@ -3,6 +3,7 @@ import { RootState } from "../../store/store";
 import ToDoListItem from "./todoListItem";
 import style from "./todolist.module.scss";
 import { useSelector } from "react-redux";
+import emptyImages from "../../assets/EmptyState.svg";
 
 type todoType = {
 	id?: number;
@@ -34,9 +35,15 @@ const ToDoList = () => {
 	return (
 		<>
 			<div className={style["todolist-container"]}>
-				{filteredTasks().map((todo: todoType) => (
-					<ToDoListItem todo={todo} key={todo.id} />
-				))}
+				{filteredTasks().length ? (
+					filteredTasks().map((todo: todoType) => <ToDoListItem todo={todo} key={todo.id} />)
+				) : selectFilterTodo == "all" ? (
+					<h1 className={style.emptyState}>Currently, there is nothing in your Task.</h1>
+				) : selectFilterTodo == "complated" ? (
+					<h1 className={style.emptyState}>There are no completed quests.</h1>
+				) : (
+					<h1 className={style.emptyState}>Congrats on doing all your Tasks.</h1>
+				)}
 			</div>
 		</>
 	);
