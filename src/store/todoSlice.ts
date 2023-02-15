@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import uuid from "react-uuid";
 
 export interface CounterState {
 	todos: object[];
@@ -6,15 +7,15 @@ export interface CounterState {
 }
 
 type todoType = {
-	id?: number;
+	id?: string;
 	todo?: string;
 	isComplated?: boolean;
 };
 
 const todos: todoType[] = [
-	{ id: 0, todo: "task 1", isComplated: false },
-	{ id: 1, todo: "task 2", isComplated: false },
-	{ id: 2, todo: "task 3", isComplated: false },
+	{ id: uuid(), todo: "task 1", isComplated: false },
+	{ id: uuid(), todo: "task 2", isComplated: false },
+	{ id: uuid(), todo: "task 3", isComplated: false },
 ];
 
 const initialState: CounterState = {
@@ -27,7 +28,7 @@ export const counterSlice = createSlice({
 	initialState,
 	reducers: {
 		setTodos: (state, action) => {
-			let addTodo = { id: state.todos.length, todo: action.payload, isComplated: false };
+			let addTodo = { id: uuid(), todo: action.payload, isComplated: false };
 			state.todos = [...state.todos, addTodo];
 		},
 		setFiltreTodo: (state, action) => {
