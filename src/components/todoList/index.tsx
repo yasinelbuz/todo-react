@@ -16,8 +16,6 @@ const ToDoList = () => {
 	const filter = useSelector((state: RootState) => state.todos.todofiltre);
 	const [selectFilterTodo, setSelectFilterTodo] = useState(filter);
 
-	console.log(selectFilterTodo);
-
 	const filteredTasks = () => {
 		if (selectFilterTodo === "complated") {
 			return todos.filter((todo: todoType) => todo.isComplated);
@@ -35,8 +33,8 @@ const ToDoList = () => {
 	return (
 		<>
 			<div className={style["todolist-container"]}>
-				{filteredTasks().length ? (
-					filteredTasks().map((todo: todoType) => <ToDoListItem todo={todo} key={todo.id} />)
+				{filteredTasks()?.length ? (
+					filteredTasks()?.map((todo: todoType) => <ToDoListItem todo={todo} key={todo.id} />)
 				) : selectFilterTodo == "all" ? (
 					<h1 className={style.emptyState}>Currently, there is nothing in your Task.</h1>
 				) : selectFilterTodo == "complated" ? (

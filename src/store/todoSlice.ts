@@ -4,6 +4,7 @@ import uuid from "react-uuid";
 export interface CounterState {
 	todos: object[];
 	todofiltre: string;
+	isModalOpen: boolean;
 }
 
 type todoType = {
@@ -13,14 +14,15 @@ type todoType = {
 };
 
 const todos: todoType[] = [
-	{ id: uuid(), todo: "task 1", isComplated: false },
-	{ id: uuid(), todo: "task 2", isComplated: false },
-	{ id: uuid(), todo: "task 3", isComplated: false },
+	{ id: "1", todo: "task 1", isComplated: false },
+	{ id: "2", todo: "task 2", isComplated: false },
+	{ id: "3", todo: "task 3", isComplated: false },
 ];
 
 const initialState: CounterState = {
 	todos: todos,
-	todofiltre: "notComplated",
+	todofiltre: "all",
+	isModalOpen: false,
 };
 
 export const counterSlice = createSlice({
@@ -31,12 +33,15 @@ export const counterSlice = createSlice({
 			let addTodo = { id: uuid(), todo: action.payload, isComplated: false };
 			state.todos = [...state.todos, addTodo];
 		},
+
 		setFiltreTodo: (state, action) => {
 			state.todofiltre = action.payload;
 		},
+
 		setDeleteTodo: (state, action) => {
 			state.todos = state.todos.filter((todo: todoType) => todo.id !== action.payload);
 		},
+
 		setIsComplated: (state, action) => {
 			const newArray = state.todos.map((todo: todoType): object => {
 				if (todo.id === action.payload) {
@@ -48,8 +53,12 @@ export const counterSlice = createSlice({
 
 			state.todos = newArray;
 		},
+
+		setIsModalOpen: (state, action) => {
+			state.isModalOpen = action.payload;
+		},
 	},
 });
 
-export const { setTodos, setFiltreTodo, setDeleteTodo, setIsComplated } = counterSlice.actions;
+export const { setTodos, setFiltreTodo, setDeleteTodo, setIsComplated, setIsModalOpen } = counterSlice.actions;
 export default counterSlice.reducer;

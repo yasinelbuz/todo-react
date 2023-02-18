@@ -1,6 +1,5 @@
 import AddTodoForm from "./components/addTodoForm";
 import ToDoList from "./components/todoList";
-import Modal from "./modal";
 import "./styles/global.scss";
 
 function App() {
