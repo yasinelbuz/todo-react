@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setFiltreTodo } from "./../../store/todoSlice";
 import style from "./addTodoForm.module.scss";
 

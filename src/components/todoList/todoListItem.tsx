@@ -19,7 +19,8 @@ const ToDoListItem: React.FC<Props> = ({ todo }) => {
 		if (onay) dispatch(setDeleteTodo(todo.id));
 	};
 
-	const updateTodo = (id, input) => {
+	const updateTodo = (id?: number, input?: string) => {
+		if (!id) return;
 		dispatch(setUpdate({ id, input }));
 		setUpdateState(false);
 	};

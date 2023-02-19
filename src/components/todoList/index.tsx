@@ -3,7 +3,6 @@ import { RootState } from "../../store/store";
 import ToDoListItem from "./todoListItem";
 import style from "./todolist.module.scss";
 import { useSelector } from "react-redux";
-import emptyImages from "../../assets/EmptyState.svg";
 
 type todoType = {
 	id?: number;
