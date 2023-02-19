@@ -4,7 +4,6 @@ import uuid from "react-uuid";
 export interface CounterState {
 	todos: object[];
 	todofiltre: string;
-	isModalOpen: boolean;
 }
 
 type todoType = {
@@ -22,7 +21,6 @@ const todos: todoType[] = [
 const initialState: CounterState = {
 	todos: todos,
 	todofiltre: "all",
-	isModalOpen: false,
 };
 
 export const counterSlice = createSlice({
@@ -54,11 +52,19 @@ export const counterSlice = createSlice({
 			state.todos = newArray;
 		},
 
-		setIsModalOpen: (state, action) => {
-			state.isModalOpen = action.payload;
+		setUpdate: (state, action) => {
+			const todo = state.todos.map((todo: todoType) => {
+				if (todo.id == action.payload.id) {
+					return { id: todo.id, todo: action.payload.input, isComplated: todo.isComplated };
+				} else {
+					return todo;
+				}
+			});
+
+			state.todos = todo;
 		},
 	},
 });
 
-export const { setTodos, setFiltreTodo, setDeleteTodo, setIsComplated, setIsModalOpen } = counterSlice.actions;
+export const { setTodos, setFiltreTodo, setDeleteTodo, setIsComplated, setUpdate } = counterSlice.actions;
 export default counterSlice.reducer;

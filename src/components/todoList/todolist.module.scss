@@ -12,11 +12,13 @@
 	background-color: #fff;
 	padding-left: 10px;
 
-	span {
+	div {
 		font-weight: bold;
 	}
 
 	.actionsBtn {
+		display: flex;
+		align-items: center;
 		button {
 			height: 40px;
 			width: 40px;
@@ -24,7 +26,10 @@
 			cursor: pointer;
 		}
 		.updateBtn {
-			background-color: aquamarine;
+			button {
+				width: 80px;
+				background-color: rgb(190, 240, 190);
+			}
 		}
 		.ok {
 			background-color: green;

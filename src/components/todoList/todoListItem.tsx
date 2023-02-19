@@ -1,10 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import style from "./todolist.module.scss";
-import { setDeleteTodo, setIsComplated, setIsModalOpen } from "../../store/todoSlice";
+import { setDeleteTodo, setIsComplated, setUpdate } from "../../store/todoSlice";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { TiTick } from "react-icons/ti";
-import { RxUpdate } from "react-icons/rx";
-import { RootState } from "../../store/store";
+import { useState } from "react";
 
 type Props = {
 	todo: { id?: number; todo?: string; isComplated?: boolean };
@@ -12,28 +11,43 @@ type Props = {
 
 const ToDoListItem: React.FC<Props> = ({ todo }) => {
 	const dispatch = useDispatch();
-	const isModalOpen = useSelector((state: RootState) => state.todos.isModalOpen);
+	const [updateState, setUpdateState] = useState(false);
+	const [input, setInput] = useState("");
 
 	const deleteTodo = () => {
 		let onay = confirm("Are you sure you want to delete Todo?");
 		if (onay) dispatch(setDeleteTodo(todo.id));
 	};
 
-	const update = () => {
-		dispatch(setIsModalOpen(!isModalOpen));
+	const updateTodo = (id, input) => {
+		dispatch(setUpdate({ id, input }));
+		setUpdateState(false);
 	};
 
 	return (
 		<>
 			{
 				<div className={style.listItem}>
-					<span style={todo?.isComplated ? { textDecoration: "line-through" } : { textDecoration: "none" }}>
-						{todo?.todo}
-					</span>
+					<div style={todo?.isComplated ? { textDecoration: "line-through" } : { textDecoration: "none" }}>
+						{updateState ? (
+							<input
+								type='text'
+								value={input}
+								className={style.updateInput}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
+							/>
+						) : (
+							todo?.todo
+						)}
+					</div>
 					<div className={style.actionsBtn}>
-						<button className={style.updateBtn} onClick={() => update()}>
-							<RxUpdate />
-						</button>
+						<div className={style.updateBtn}>
+							{updateState ? (
+								<button onClick={() => updateTodo(todo.id, input)}>Update Done</button>
+							) : (
+								<button onClick={() => setUpdateState(true)}>Update</button>
+							)}
+						</div>
 						<button className={style.ok} onClick={() => dispatch(setIsComplated(todo.id))}>
 							<TiTick style={{ color: "white" }} />
 						</button>
